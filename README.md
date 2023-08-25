@@ -41,7 +41,7 @@ repositories {
 ...
 dependencies {
   ...
-  implementation 'com.github.knokko:memory-query:v1.0'
+  implementation 'com.github.knokko:memory-query:v1.1'
 }
 ```
 
@@ -59,6 +59,6 @@ dependencies {
 <dependency>
   <groupId>com.github.knokko</groupId>
   <artifactId>memory-query</artifactId>
-  <version>v1.0</version>
+  <version>v1.1</version>
 </dependency>
 ```

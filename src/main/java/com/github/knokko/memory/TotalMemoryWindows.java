@@ -1,8 +1,6 @@
 package com.github.knokko.memory;
 
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -11,24 +9,10 @@ import static java.lang.Long.parseLong;
 
 class TotalMemoryWindows extends TotalMemoryQuery {
 
-    private final Path memoryScriptFile;
-
-    TotalMemoryWindows() {
-        try {
-            memoryScriptFile = Files.createTempFile("", ".bat");
-        } catch (IOException what) {
-            throw new MemoryQueryException("Failed to create temp file for Windows memory batch?: " + what.getMessage());
-        }
-    }
-
     @Override
     long getMemoryUsage(long pid) throws IOException, InterruptedException {
-        String memoryQueryCommand = "tasklist /FI \"PID eq " + pid + "\"";
-        assert memoryScriptFile != null;
-        Files.writeString(memoryScriptFile, memoryQueryCommand);
-
-        ProcessBuilder memoryQueryBuilder = new ProcessBuilder(memoryScriptFile.toAbsolutePath().toString());
-        Process memoryQueryProcess = memoryQueryBuilder.start();
+        String[] memoryQueryCommand = { "tasklist", "/FI", "\"PID eq " + pid + '"'};
+        Process memoryQueryProcess = Runtime.getRuntime().exec(memoryQueryCommand);
         assertSuccess(memoryQueryProcess);
 
         List<String> scannedInput = new ArrayList<>();
@@ -38,8 +22,8 @@ class TotalMemoryWindows extends TotalMemoryQuery {
         }
         scanner.close();
 
-        if (scannedInput.size() == 6) {
-            String relevantLine = scannedInput.get(5);
+        if (scannedInput.size() == 4) {
+            String relevantLine = scannedInput.get(3);
             int lastSpaceIndex = relevantLine.lastIndexOf(' ');
             if (lastSpaceIndex != -1) {
                 int memorySpaceIndex = relevantLine.substring(0, lastSpaceIndex).lastIndexOf(' ');

@@ -6,10 +6,7 @@ package com.github.knokko.memory;
  * <ul>
  *     <li>The (version of) the OS is not supported</li>
  *     <li>I made a programming error</li>
- *     <li>
- *         Extreme conditions (e.g. there is no more disk space for short temp files or the maximum number
- *         of OS processes has been reached)
- *     </li>
+ *     <li>Extreme conditions (e.g. the maximum number of OS processes has been reached)</li>
  * </ul>
  * In the first 2 cases, an issue is pull request would be welcome. In the last case, take better care of your
  * computer :)
