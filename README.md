@@ -5,8 +5,8 @@ the memory usage of the process. You only have:
 - `Runtime.getRuntime().totalMemory()`, which only returns the amount of memory in the JVM (and misses some stuff like direct byte buffers)
 
 This mini library provides a way to query the process memory usage of the Java process, which doesn't miss anything: `TotalMemory.getProcessMemoryUsage()`.
-- On Windows, the reported usage is similar to that of the task manager.
-- On Linux, the reported usage is similar to that of htop.
+- On Windows, the reported usage is given by `tasklist` and similar to that of the task manager.
+- On Unix, the reported usage is the RSS given by `ps`
 
 The process memory usage can be a useful metric for monitoring purposes and detecting nasty memory leaks that are not detected
 by `MemoryMXBean` and `Runtime.getRuntime().totalMemory()` (and are usually not included in Java heap dumps). Note however

@@ -4,8 +4,7 @@ import java.lang.management.ManagementFactory;
 import java.lang.management.MemoryMXBean;
 import java.lang.management.MemoryUsage;
 
-import static com.github.knokko.memory.TotalMemory.getProcessMemoryUsage;
-import static com.github.knokko.memory.TotalMemory.isWindows;
+import static com.github.knokko.memory.TotalMemory.*;
 
 /**
  * A 'snapshot' of the memory usage of the program at a certain point in time.
@@ -81,7 +80,7 @@ public class MemorySnapshot {
     }
 
     /**
-     * Gets the 'unknown' memory usage (in bytes). This is basically <i>processMemory - heapMemory - nonHeapMemory</i>.
+     * Gets the 'unknown' memory usage (in bytes). This is just <i>processMemory - heapMemory - nonHeapMemory</i>.
      * <p>
      *     Unlike the heapMemory and nonHeapMemory, this amount is expected to be rather stable, and should not change
      *     abruptly at every GC. Watching this periodically is a nice way to detect 'native' memory leaks.
@@ -89,14 +88,7 @@ public class MemorySnapshot {
      */
     public Long getUnknownMemory() {
         if (processMemory == null) return null;
-
-        // On Windows, `getProcessMemoryUsage` will count the *used* (non-)heap memory
-        if (isWindows) return processMemory - heapMemory.getUsed() - nonHeapMemory.getUsed();
-
-        // On Linux, `getProcessMemoryUsage` will count the *committed* (non-)heap memory
-        else return processMemory - heapMemory.getCommitted() - nonHeapMemory.getCommitted();
-
-        // TODO Figure out which one to use on MacOS
+        return processMemory - heapMemory.getUsed() - nonHeapMemory.getUsed();
     }
 
     private String format(long value) {
