@@ -25,10 +25,9 @@ Furthermore, this library contains a `MemorySnapshot` class, which holds the pro
 alongside the Java *object* usage reported by `MemoryMXBean`. Snapshots can be taken using `MemorySnapshot.take()`.
 
 # Java versions and operating systems
-This library requires Java 11 or later. It is tested (with Github Actions) on Windows, Ubuntu, and MacOS with Java 11, 17, and 20.
-The other Java versions between 11 and 20 will probably work as well, but are not explicitly tested. Java 8 can **not** be supported
-because it doesn't have a proper way to query the process ID. Java 9 and 10 could be supported with some extra work, but I didn't
-bother because these are end of life anyway.
+This library requires Java 11 or later. It is tested (with GitHub Actions) on Windows, Ubuntu, and macOS with Java 11, 17, 21, and 25.
+- Java 8 can **not** be supported because it doesn't have a proper way to query the process ID.
+- Java 9 and 10 could be supported with some extra work, but I didn't bother because these are end of life anyway.
 
 # Add to your build
 ## Gradle
@@ -36,12 +35,15 @@ bother because these are end of life anyway.
 ...
 repositories {
   ...
-  maven { url 'https://jitpack.io' }
+  maven {
+	name = "knokko-reposilite"
+	url = "https://49.12.188.159:8080/releases/"
+  }
 }
 ...
 dependencies {
   ...
-  implementation 'com.github.knokko:memory-query:v1.1'
+  implementation "com.github.knokko:memory-query:1.1.0"
 }
 ```
 
@@ -51,14 +53,15 @@ dependencies {
 <repositories>
   ...
   <repository>
-    <id>jitpack.io</id>
-    <url>https://jitpack.io</url>
+    <id>knokko-reposilite</id>
+    <name>Knokko Reposilite</name>
+    <url>https://49.12.188.159:8080/releases/</url>
   </repository>
 </repositories>
 ...
 <dependency>
   <groupId>com.github.knokko</groupId>
   <artifactId>memory-query</artifactId>
-  <version>v1.1</version>
+  <version>1.1.0</version>
 </dependency>
 ```
